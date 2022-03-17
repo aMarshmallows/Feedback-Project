@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 function Card({children, reverse}) {
     return (
         //   this is how you do conditinal classes - card is always there, but we only want reverse if its true
+        // reverse will only happen if set to true because of the && operator
         <div className={`card ${reverse && 'reverse'}`}>
             {children}
         </div>
