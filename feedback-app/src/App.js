@@ -3,6 +3,7 @@ import Header from './components/Header';
 import FeedbackList from './components/FeedbackList';
 import FeedbackData from './data/feedbackData';
 import FeedbackStats from './components/FeedbackStats';
+import FeedbackForm from './components/FeedbackForm';
 // do npm run start instead of npm start
 // rfce to get the boilerplate react code
 //  passing props dow several levels is called prop drilling
@@ -22,6 +23,7 @@ function App() {
     <div>
       <Header text="Feedback"></Header>
       <div className="container">
+        <FeedbackForm></FeedbackForm>
         <FeedbackStats feedback={feedback}></FeedbackStats>
         {/*  passes in the data we got from the feedback file as a prop */}
         <FeedbackList
