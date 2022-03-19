@@ -1,8 +1,11 @@
 import React from 'react'
 import FeedbackItem from './FeedbackItem'
-import PropTypes from 'prop-types';
+import {useContext} from 'react'
+import FeedbackContext from '../context/FeedbackContext';
 
-function FeedbackList({feedback, handleDelete}) {
+function FeedbackList() {
+
+    const {feedback} = useContext(FeedbackContext)
     // if no feedback was passed in, do this
     if (!feedback || feedback.length === 0) {
         return <p>No Feedback</p>
@@ -16,23 +19,12 @@ function FeedbackList({feedback, handleDelete}) {
             //  handle delete is now a prop passed into feedbackItem
             <FeedbackItem 
             key={item.id} 
-            item={item} 
-            handleDelete={handleDelete}>
+            item={item} >
             </FeedbackItem>
         ))}
     </div>
   )
 }
 
-// defining this makes our code more robust. Could also use Typescript
-FeedbackList.propTypes = {
-    feedback: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.number.isRequired, 
-            text: PropTypes.string.isRequired, 
-            rating: PropTypes.number.isRequired, 
 
-        })
-    )
-}
 export default FeedbackList
