@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 // used to generate ids for objects
 import { v4 as uuidv4 } from 'uuid'
 import Header from './components/Header'
@@ -6,6 +7,7 @@ import FeedbackList from './components/FeedbackList'
 import FeedbackData from './data/feedbackData'
 import FeedbackStats from './components/FeedbackStats'
 import FeedbackForm from './components/FeedbackForm'
+import AboutPage from './pages/AboutPage'
 // do npm run start instead of npm start
 // rfce to get the boilerplate react code
 //  passing props dow several levels is called prop drilling
@@ -31,18 +33,32 @@ function App() {
   }
 
   return (
-    <div>
+    <Router>
       <Header text="Feedback"></Header>
       <div className="container">
-        <FeedbackForm handleAdd={addFeedback}></FeedbackForm>
-        <FeedbackStats feedback={feedback}></FeedbackStats>
-        {/*  passes in the data we got from the feedback file as a prop */}
-        <FeedbackList
-          feedback={feedback}
-          handleDelete={deleteFeedback}
-        ></FeedbackList>
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <>
+                <FeedbackForm handleAdd={addFeedback}></FeedbackForm>
+                <FeedbackStats feedback={feedback}></FeedbackStats>
+                {/*  passes in the data we got from the feedback file as a prop */}
+                <FeedbackList
+                  feedback={feedback}
+                  handleDelete={deleteFeedback}
+                ></FeedbackList>
+              </>
+            }
+          ></Route>
+          {/* this route passes in the aboutpage as a component */}
+          <Route path="/about" element={<AboutPage></AboutPage>}>
+            This is the about route
+          </Route>
+        </Routes>
       </div>
-    </div>
+    </Router>
   )
 }
 
