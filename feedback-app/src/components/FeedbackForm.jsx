@@ -2,20 +2,52 @@ import React from 'react'
 import {useState} from 'react'
 import Card from './shared/Card'
 import Button from './shared/Button'
+import RatingSelect from './RatingSelect'
 
-function FeedbackForm() {
+function FeedbackForm({handleAdd}) {
     const[text, setText] = useState('')
+    const[rating, setRating] = useState(10)
+    const[btnDisabled, setBtnDisabled] = useState(true)
+    const[message, setMessage] = useState('')
 
     const handleTextChange = (e) => {
+        if (text === '') {
+            setBtnDisabled(true)
+            setMessage(null)
+        } 
+        // if text after trimming whitespace is less than 10 characters
+        else if (text !== '' && text.trim().length <= 10) {
+            setBtnDisabled(true)
+            setMessage('Text must be at least 10 characters')
+        }
+        else {
+            setMessage(null)
+            setBtnDisabled(false)
+        }
         setText(e.target.value)
+    }
+
+    const handleSubmit = (e) => {
+        // used to prveent default behaviour which is subnitting to actual file
+        e.preventDefault()
+        // double check if length of input is correct because there are ways around the client side to 
+        // still submit even if not valid eg disabling the 'disabled' class using inspect
+        if (text.trim().length > 10) {
+            const newFeedback = {
+                text: text, rating: rating
+            }
+            handleAdd(newFeedback)
+            setText('')
+        }
     }
 
 
     return (
         <Card>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <h2>How would you rate your service with us?</h2>
-                {/* rating select component */}
+                {/* passing in prop 'select' which is actually a function */}
+                <RatingSelect  select={(rating) => setRating(rating)}></RatingSelect>
                 <div className="input-group">
                     <input 
                     onChange={handleTextChange} 
@@ -23,8 +55,10 @@ function FeedbackForm() {
                     placeholder="Write a review" 
                     value={text}/>
                     {/* here the children passed into Button is 'Send */}
-                    <Button type="submit">Send</Button>
+                    <Button type="submit" isDisabled={btnDisabled}>Send</Button>
                 </div>
+                {/* if there's a message, display it */}
+                {message && <div className='message'>{message}</div>}
             </form>
         </Card>
     )
