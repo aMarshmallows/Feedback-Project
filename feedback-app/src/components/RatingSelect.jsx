@@ -1,8 +1,17 @@
 import React from 'react'
-import {useState} from 'react'
+import {useState, useContext, useEffect} from 'react'
+import FeedbackContext from '../context/FeedbackContext'
 
 function RatingSelect({select}) {
     const [selected, setSelected] = useState(1)
+    const {feedbackEdit} = useContext(FeedbackContext)
+
+    useEffect(() => {
+        if (feedbackEdit.edit === true){
+            setSelected(feedbackEdit.item.rating)
+        }
+    }, [feedbackEdit])
+
     const handleChange = (e) => {
         // "+" changes the type from string to number
         setSelected(+e.currentTarget.value)
