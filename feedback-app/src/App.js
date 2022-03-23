@@ -11,6 +11,7 @@ import { FeedbackProvider } from './context/FeedbackContext'
 // rfce to get the boilerplate react code
 //  passing props dow several levels is called prop drilling
 // will use context api later so don't have to do this
+// make sure you're inside the same directory as the package.json and db.json
 
 function App() {
   return (

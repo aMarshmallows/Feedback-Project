@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import { createContext, useState, useEffect } from 'react'
 // used to generate ids for objects
 import { v4 as uuidv4 } from 'uuid'
 
@@ -6,18 +6,26 @@ const FeedbackContext = createContext()
 
 export const FeedbackProvider = ({ children }) => {
   //  global states
-  const [feedback, setFeedback] = useState([
-    {
-      id: 1,
-      text: 'This item is rom context',
-      rating: 10,
-    },
-  ])
-
+  const [isLoading, setIsLoading] = useState(true)
+  const [feedback, setFeedback] = useState([])
   const [feedbackEdit, setFeedbackEdit] = useState({
     item: {},
     edit: false,
   })
+
+  useEffect(() => {
+    fetchFeedback()
+  }, [])
+
+  const fetchFeedback = async () => {
+    // the ?_sort=id&order=desc results in the data being ordered by descending id number
+    const response = await fetch(
+      'http://localhost:5000/feedback?_sort=id&order=desc'
+    )
+    const data = await response.json()
+    setFeedback(data)
+    setIsLoading(false)
+  }
 
   // delete feedback
   const deleteFeedback = (id) => {
@@ -59,6 +67,7 @@ export const FeedbackProvider = ({ children }) => {
       value={{
         feedback,
         feedbackEdit,
+        isLoading,
         deleteFeedback,
         addFeedback,
         // editFeedback is the function that sets which item to edit
