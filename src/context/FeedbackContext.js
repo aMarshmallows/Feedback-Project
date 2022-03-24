@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react'
+import React, { createContext, useState, useEffect } from 'react'
 // used to generate ids for objects
 
 const FeedbackContext = createContext()
