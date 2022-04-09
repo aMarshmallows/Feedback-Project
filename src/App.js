@@ -1,3 +1,25 @@
+// ----General Notes----
+// do npm run start instead of npm start
+// rfce to get the boilerplate react code
+//  passing props dow several levels is called prop drilling
+// used context api instead so don't have to do this
+// make sure you're inside the same directory as the package.json and db.json when running npm start
+
+// ----How this application works----
+// all pages are in pages. All components are in the components folder, sorted by shared or single
+// this application uses a global css sheet - index.css
+// db.json is our json server database
+// App.js is our main file from which we call everything else.
+// index.js just exists and calls App.js
+// context includes all the pieces of state and functions related to our database so we don't need to prop drill
+// just call the pieces of state and functions we need in each function from context
+//
+// ----Components names meaning----
+// feedback form is the card that takes in input from the user to create a new feedback item
+// feedback list holds and displays all the previous feedback items
+// feedback items are cards displaying each feedback including text, rating etc
+// feedback stats is the bar right below feedback input that shows how many feedback items we have and the average rating
+
 import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
@@ -8,11 +30,6 @@ import FeedbackForm from './components/FeedbackForm'
 import AboutPage from './pages/AboutPage'
 import AboutIconLink from './components/AboutIconLink'
 import { FeedbackProvider } from './context/FeedbackContext'
-// do npm run start instead of npm start
-// rfce to get the boilerplate react code
-//  passing props dow several levels is called prop drilling
-// will use context api later so don't have to do this
-// make sure you're inside the same directory as the package.json and db.json
 
 function App() {
   return (
@@ -28,8 +45,6 @@ function App() {
                 <>
                   <FeedbackForm></FeedbackForm>
                   <FeedbackStats></FeedbackStats>
-                  {/*  passes in the data we got from the feedback file as a prop previously*/}
-                  {/* no longer need to do that because of useContext */}
                   <FeedbackList></FeedbackList>
                 </>
               }
